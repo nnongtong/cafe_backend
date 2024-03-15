@@ -52,8 +52,8 @@ public class BillServiceImpl implements BillService {
                     insertBill(requestMap);
                 }
 
-                String data = "Name: "+requestMap.get("name") + "\n" + "Contact Number: " +requestMap.get("contactNumber")+
-                        "\n"+"Email: "+requestMap.get("email") + "\n" + "Payment Method: " +requestMap.get("paymentMethod");
+                String data = "Payment Method: " +requestMap.get("paymentMethod")+
+                        "\n"+"Date: "+requestMap.get("date");
 
                 Document document = new Document();
                 PdfWriter.getInstance(document,new FileOutputStream(CafeConstants.STORE_LOCATION+"\\"+fileName+".pdf"));
@@ -93,10 +93,8 @@ public class BillServiceImpl implements BillService {
     }
 
     private boolean validateRequestMap(Map<String, Object> requestMap) {
-        return requestMap.containsKey("name") &&
-                requestMap.containsKey("contactNumber") &&
-                requestMap.containsKey("email") &&
-                requestMap.containsKey("paymentMethod") &&
+        return requestMap.containsKey("paymentMethod") &&
+                requestMap.containsKey("date") &&
                 requestMap.containsKey("productDetails") &&
                 requestMap.containsKey("totalAmount");
     }
@@ -105,10 +103,8 @@ public class BillServiceImpl implements BillService {
         try {
             Bill bill = new Bill();
             bill.setUuid((String) requestMap.get("uuid"));
-            bill.setName((String) requestMap.get("name"));
-            bill.setEmail((String) requestMap.get("email"));
-            bill.setContactNumber((String) requestMap.get("contactNumber"));
             bill.setPaymentMethod((String) requestMap.get("paymentMethod"));
+            bill.setDate((String) requestMap.get("date"));
             bill.setTotal(Integer.parseInt((String) requestMap.get("totalAmount")));
             bill.setProductDetails((String) requestMap.get("productDetails"));
             bill.setCreatedBy(jwtFilter.getCurrentUser());

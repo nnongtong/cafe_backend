@@ -40,6 +40,9 @@ public class Bill implements Serializable {
     @Column(name = "paymentmethod")
     private String paymentMethod;
 
+    @Column(name = "date")
+    private String date;
+
     @Column(name = "total")
     private Integer total;
 
